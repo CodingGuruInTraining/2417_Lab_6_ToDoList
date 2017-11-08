@@ -51,7 +51,7 @@ public class ToDoListFragment extends Fragment {
         mListView.setAdapter(mListAdapter);
         mListAdapter.notifyDataSetChanged();
 
-        mListView.setOnClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Notify the listener that the user has clicked on a list item

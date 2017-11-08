@@ -1,9 +1,7 @@
 package com.example.hl4350hb.todolist;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -25,16 +23,16 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            //
+            // no saved instance state
             Log.d(TAG, "onCreate has no instance state. ...");
-
+            // Create new arraylist
             mTodoItems = new ArrayList<>();
 
             AddToDoItemFragment addNewFragment = AddToDoItemFragment.newInstance();
             ToDoListFragment listFragment = ToDoListFragment.newInstance(mTodoItems);
 
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
+            android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
 
             ft.add(R.id.add_todo_view_container, addNewFragment, ADD_NEW_FRAG_TAG);
             ft.add(R.id.todo_list_view_container, listFragment, LIST_FRAG_TAG);
@@ -67,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
 
         //
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+//        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         ToDoListFragment listFragment = (ToDoListFragment) fm.findFragmentByTag(LIST_FRAG_TAG);
         listFragment.notifyItemsChanged();
     }

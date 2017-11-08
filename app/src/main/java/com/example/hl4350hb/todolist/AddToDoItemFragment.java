@@ -53,6 +53,10 @@ public class AddToDoItemFragment extends Fragment {
                     boolean urgent = urgentCheckbox.isChecked();
 
                     // Clear input form
+                    newItemText.getText().clear();
+                    urgentCheckbox.setChecked(false);
+
+                    // Create a new to do item
                     ToDoItem newItem = new ToDoItem(text, urgent);
 
                     Log.d(TAG, "New item is " + newItem);
@@ -76,5 +80,9 @@ public class AddToDoItemFragment extends Fragment {
 
     public interface NewItemCreatedListener {
         void newItemCreated(ToDoItem newItem);
+    }
+
+    public static AddToDoItemFragment newInstance() {
+        return new AddToDoItemFragment();
     }
 }
