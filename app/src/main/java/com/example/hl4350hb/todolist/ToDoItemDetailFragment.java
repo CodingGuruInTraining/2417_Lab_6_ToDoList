@@ -74,8 +74,6 @@ public class ToDoItemDetailFragment extends Fragment {
                 mItemDoneListener.todoItemDone(item);
             }
         });
-        //TODO
-        //TODO
 
         return view;
     }

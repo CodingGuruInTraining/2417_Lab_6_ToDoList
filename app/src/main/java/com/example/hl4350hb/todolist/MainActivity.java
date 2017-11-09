@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
 
         //
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-//        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         ToDoListFragment listFragment = (ToDoListFragment) fm.findFragmentByTag(LIST_FRAG_TAG);
         listFragment.notifyItemsChanged();
     }
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
     public void itemSelected(ToDoItem selected) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-//        ft.replace(R.id.todo_detail_view_container, ToDoItemDetailFragment.newInstance(selected));
+        ft.replace(R.id.todo_detail_view_container, ToDoItemDetailFragment.newInstance(selected));
 
         // Create a new Detail fragment and add to the activity.
         ToDoItemDetailFragment detailFragment = ToDoItemDetailFragment.newInstance(selected);
