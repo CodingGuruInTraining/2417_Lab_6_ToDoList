@@ -3,6 +3,8 @@ package com.example.hl4350hb.todolist;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -30,12 +32,14 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
 
             AddToDoItemFragment addNewFragment = AddToDoItemFragment.newInstance();
             ToDoListFragment listFragment = ToDoListFragment.newInstance(mTodoItems);
+            ToDoItemDetailFragment detailFragment = ToDoItemDetailFragment.newInstance(new ToDoItem("", false));
 
-            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
 
             ft.add(R.id.add_todo_view_container, addNewFragment, ADD_NEW_FRAG_TAG);
             ft.add(R.id.todo_list_view_container, listFragment, LIST_FRAG_TAG);
+            ft.add(R.id.todo_detail_view_container, detailFragment);
 
             ft.commit();
         } else {
@@ -43,11 +47,6 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
             mTodoItems = savedInstanceState.getParcelableArrayList(TODO_ITEMS_KEY);
             Log.d(TAG, "onCreate has saved instance state ArrayList = " + mTodoItems);
         }
-
-        //TODO
-        //TODO
-        //TODO
-        //TODO
     }
 
     @Override
@@ -72,12 +71,35 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
 
     @Override
     public void itemSelected(ToDoItem selected) {
-        //TODO
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+//        ft.replace(R.id.todo_detail_view_container, ToDoItemDetailFragment.newInstance(selected));
+
+        // Create a new Detail fragment and add to the activity.
+        ToDoItemDetailFragment detailFragment = ToDoItemDetailFragment.newInstance(selected);
+        ft.add(android.R.id.content, detailFragment);
+        // Add to the back stack so pressing the Back button will revert to this transaction.
+        ft.addToBackStack(DETAIL_FRAG_TAG);
+
+        ft.commit();
     }
 
     @Override
     public void todoItemDone(ToDoItem doneItem) {
-        //TODO
-        //TODO
+        // Remove item from list
+        mTodoItems.remove(doneItem);
+        Log.d(TAG, "newItemRemoved list is now = " + mTodoItems);
+
+        // Find list fragment and tell it that the data has changed.
+        FragmentManager fm = getSupportFragmentManager();
+        ToDoListFragment listFragment = (ToDoListFragment) fm.findFragmentByTag(LIST_FRAG_TAG);
+        listFragment.notifyItemsChanged();
+
+        // Revert the last fragment transaction on the back stack.
+        // This removes the detail fragment from the activity, which leaves the addlist fragments.
+
+        FragmentTransaction ft = fm.beginTransaction();
+        fm.popBackStack();
+        ft.commit();
     }
 }

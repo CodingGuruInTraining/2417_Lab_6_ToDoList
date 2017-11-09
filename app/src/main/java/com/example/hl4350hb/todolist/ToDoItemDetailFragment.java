@@ -1,6 +1,6 @@
 package com.example.hl4350hb.todolist;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.TextView;
 
 /**
@@ -24,6 +23,16 @@ public class ToDoItemDetailFragment extends Fragment {
     MarkItemAsDoneListener mItemDoneListener;
 
     //TODO
+
+
+    public static ToDoItemDetailFragment newInstance(ToDoItem item) {
+        final Bundle args = new Bundle();
+        args.putParcelable(TODO_ITEM_ARGUMENT, item);
+        final ToDoItemDetailFragment fragment = new ToDoItemDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -61,6 +70,8 @@ public class ToDoItemDetailFragment extends Fragment {
                 detailTextText.setText("");
                 detailDateText.setText("");
                 detailUrgenCheckBox.setChecked(false);
+                // Tell listener that this item is done.
+                mItemDoneListener.todoItemDone(item);
             }
         });
         //TODO
@@ -79,11 +90,5 @@ public class ToDoItemDetailFragment extends Fragment {
         void todoItemDone(ToDoItem doneItem);
     }
 
-    public static ToDoItemDetailFragment newInstance(ToDoItem item) {
-        final Bundle args = new Bundle();
-        args.putParcelable(TODO_ITEM_ARGUMENT, item);
-        final ToDoItemDetailFragment fragment = new ToDoItemDetailFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 }
