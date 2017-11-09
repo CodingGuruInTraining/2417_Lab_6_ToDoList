@@ -17,12 +17,11 @@ import android.widget.Toast;
  */
 
 public class AddToDoItemFragment extends Fragment {
-
+    // Tag value for Logging.
     private static final String TAG = "Add To Do Item Fragment";
-
+    // Global variable for object.
     private NewItemCreatedListener mNewItemListener;
 
-    //TODO
 
     @Override
     public void onAttach(Context context) {
@@ -39,10 +38,12 @@ public class AddToDoItemFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_to_do_item, container, false);
 
+        // Declare widgets.
         Button addItem = (Button) view.findViewById(R.id.add_todo_item_button);
         final EditText newItemText = (EditText) view.findViewById(R.id.new_todo_item_edittext);
         final CheckBox urgentCheckbox = (CheckBox) view.findViewById(R.id.urgent_checkbox);
 
+        // Click event.
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,11 +64,11 @@ public class AddToDoItemFragment extends Fragment {
                     // Return newItem back to calling Activity
                     mNewItemListener.newItemCreated(newItem);
                 } else {
+                    // Displays Toast with message.
                     Toast.makeText(getActivity(), "Please enter some text", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
         return view;
     }
 
@@ -77,10 +78,12 @@ public class AddToDoItemFragment extends Fragment {
         mNewItemListener = null;
     }
 
+    // Establishes interface.
     public interface NewItemCreatedListener {
         void newItemCreated(ToDoItem newItem);
     }
 
+    // Constructor-like method for creating object.
     public static AddToDoItemFragment newInstance() {
         return new AddToDoItemFragment();
     }

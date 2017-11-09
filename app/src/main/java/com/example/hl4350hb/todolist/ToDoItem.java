@@ -10,22 +10,26 @@ import java.util.Date;
  */
 
 public class ToDoItem implements Parcelable {
-
+    // Object's attributes.
     private String text;
     private Date dateCreated;
     private boolean urgent;
 
+    // Constructor #1.
     public ToDoItem(Parcel in) {
         text = in.readString();
         dateCreated = (Date) in.readSerializable();
         urgent = (in.readInt() == 1);
     }
 
+    // Constructor #2.
     public ToDoItem(String text, boolean urgent) {
         this.text = text;
         this.urgent = urgent;
         dateCreated = new Date();
     }
+
+    // Getters and Setters.
 
     public String getText() {
         return text;

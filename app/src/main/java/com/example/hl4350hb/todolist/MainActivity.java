@@ -10,14 +10,16 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AddToDoItemFragment.NewItemCreatedListener, ToDoItemDetailFragment.MarkItemAsDoneListener,ToDoListFragment.ListItemSelectedListener {
 
+    // Static key and tag values.
     private static final String TODO_ITEMS_KEY = "TODO ITEMS ARRAY LIST";
     private static final String ADD_NEW_FRAG_TAG = "ADD NEW FRAGMENT";
     private static final String LIST_FRAG_TAG = "LIST FRAGMENT";
     private static final String DETAIL_FRAG_TAG = "DETAIL FRAGMENT";
+    private static final String TAG = "MAIN ACTIVITY";
 
+    // Global variable to hold arraylist.
     private ArrayList<ToDoItem> mTodoItems;
 
-    private static final String TAG = "MAIN ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
             // Create new arraylist
             mTodoItems = new ArrayList<>();
 
+            // Creates new instance of each fragment container.
             AddToDoItemFragment addNewFragment = AddToDoItemFragment.newInstance();
             ToDoListFragment listFragment = ToDoListFragment.newInstance(mTodoItems);
             ToDoItemDetailFragment detailFragment = ToDoItemDetailFragment.newInstance(new ToDoItem("", false));
@@ -37,13 +40,14 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
 
+            // Adds each fragment container to activity.
             ft.add(R.id.add_todo_view_container, addNewFragment, ADD_NEW_FRAG_TAG);
             ft.add(R.id.todo_list_view_container, listFragment, LIST_FRAG_TAG);
             ft.add(R.id.todo_detail_view_container, detailFragment);
 
             ft.commit();
         } else {
-            //
+            // Loads saved values.
             mTodoItems = savedInstanceState.getParcelableArrayList(TODO_ITEMS_KEY);
             Log.d(TAG, "onCreate has saved instance state ArrayList = " + mTodoItems);
         }
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
 
         Log.d(TAG, "newItemCreated = " + mTodoItems);
 
-        //
+        // Does some fragment magic.
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         ToDoListFragment listFragment = (ToDoListFragment) fm.findFragmentByTag(LIST_FRAG_TAG);
         listFragment.notifyItemsChanged();
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements AddToDoItemFragme
     @Override
     public void itemSelected(ToDoItem selected) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
+        // Replaces current fragment item.
         ft.replace(R.id.todo_detail_view_container, ToDoItemDetailFragment.newInstance(selected));
 
         // Create a new Detail fragment and add to the activity.

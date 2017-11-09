@@ -19,6 +19,7 @@ public class ToDoListArrayAdapter extends ArrayAdapter<ToDoItem> {
 
     Activity mActivity;
 
+    // Constructor.
     public ToDoListArrayAdapter(Context context, int resource, ArrayList<ToDoItem> items) {
         super(context, resource, items);
         this.mActivity = (Activity) context;
@@ -37,10 +38,12 @@ public class ToDoListArrayAdapter extends ArrayAdapter<ToDoItem> {
         // data for this ToDoItem
         ToDoItem item = getItem(position);
 
+        // Sets up the widgets.
         TextView todoText = (TextView) rowView.findViewById(R.id.todo_list_text_textview);
         TextView todoDate = (TextView) rowView.findViewById(R.id.todo_list_date_textview);
         CheckBox todoUrgent = (CheckBox) rowView.findViewById(R.id.todo_list_urgent_checkbox);
 
+        // Sets up values in widgets.
         todoText.setText(item.getText());
         todoDate.setText(item.getDateCreated().toString());
         todoUrgent.setChecked(item.isUrgent());

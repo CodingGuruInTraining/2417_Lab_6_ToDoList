@@ -17,14 +17,13 @@ import android.widget.TextView;
 
 public class ToDoItemDetailFragment extends Fragment {
 
+    // Static tag values.
     private static final String TODO_ITEM_ARGUMENT = "todo item argument";
     private static final String TAG = "TODO ITEM DETAIL FRAG";
 
     MarkItemAsDoneListener mItemDoneListener;
 
-    //TODO
-
-
+    // Constructor-like method for creating new instance of object.
     public static ToDoItemDetailFragment newInstance(ToDoItem item) {
         final Bundle args = new Bundle();
         args.putParcelable(TODO_ITEM_ARGUMENT, item);
@@ -49,7 +48,7 @@ public class ToDoItemDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_to_do_item_detail, container, false);
 
-        // Get the to do item from the arguements passed in when this fragment was created.
+        // Get the to do item from the arguments passed in when this fragment was created.
         final ToDoItem item = getArguments().getParcelable(TODO_ITEM_ARGUMENT);
         Log.d(TAG, "onCreateView received the follwoing item: " + item);
 
@@ -59,10 +58,12 @@ public class ToDoItemDetailFragment extends Fragment {
         final CheckBox detailUrgenCheckBox = (CheckBox) view.findViewById(R.id.to_do_detail_urgent_checkbox);
         Button doneButton = (Button) view.findViewById(R.id.to_do_detail_done_button);
 
+        // Sets up values in widgets.
         detailTextText.setText(item.getText());
         detailDateText.setText(item.getDateCreated().toString());
         detailUrgenCheckBox.setChecked(item.isUrgent());
 
+        // Creates click event listener for button.
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +75,6 @@ public class ToDoItemDetailFragment extends Fragment {
                 mItemDoneListener.todoItemDone(item);
             }
         });
-
         return view;
     }
 
@@ -84,9 +84,8 @@ public class ToDoItemDetailFragment extends Fragment {
         mItemDoneListener = null;
     }
 
+    // Interface.
     interface MarkItemAsDoneListener {
         void todoItemDone(ToDoItem doneItem);
     }
-
-
 }
